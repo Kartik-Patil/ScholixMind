@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white dark:bg-slate-950;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply backdrop-blur-md bg-white/10 border border-white/20 dark:bg-slate-900/20;
+  }
+
+  .glass-light {
+    @apply backdrop-blur-sm bg-white/40 border border-white/30;
+  }
+
+  .glow-effect {
+    @apply shadow-lg shadow-primary-500/20 dark:shadow-primary-500/10;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 via-accent-500 to-primary-700 bg-clip-text text-transparent;
+  }
+
+  .btn-primary {
+    @apply px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-primary-600/50 hover:-translate-y-1 active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply px-8 py-3 border-2 border-primary-600 text-primary-600 rounded-lg font-semibold transition-all duration-300 hover:bg-primary-50 dark:hover:bg-primary-900 dark:text-primary-400 dark:border-primary-400;
+  }
+
+  .btn-outline {
+    @apply px-8 py-3 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg font-semibold transition-all duration-300 hover:bg-slate-50 dark:hover:bg-slate-900;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold;
+  }
+
+  .section-subtitle {
+    @apply text-lg md:text-xl text-slate-600 dark:text-slate-400;
+  }
+}
