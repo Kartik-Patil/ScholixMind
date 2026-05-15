@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Target, Brain, Zap, Globe } from 'lucide-react';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function About() {
   const features = [
@@ -30,7 +31,9 @@ export default function About() {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8" id="about">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" id="about">
+      <AnimatedBackground variant="primary" intensity="low" animated />
+      
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import ProductLogo from './ProductLogo';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,17 +18,20 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <motion.div
+          <motion.a
+            href="#top"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center space-x-2 group cursor-pointer"
+            className="flex items-center space-x-3 group cursor-pointer"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-500 rounded-lg flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary-500/50 transition-all duration-300">
-              <span className="text-white font-bold text-lg">S</span>
-            </div>
+            <ProductLogo src={'/assests/Scholix_logo.png'} alt={'Scholix Mind'} size={44} />
             <span className="font-bold text-xl bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Scholix Mind</span>
-          </motion.div>
+          </motion.a>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-1">

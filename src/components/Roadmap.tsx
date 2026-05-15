@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Rocket, Zap, Brain, Mic, Filter, Lightbulb } from 'lucide-react';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function Roadmap() {
   const roadmapItems = [
@@ -48,7 +49,9 @@ export default function Roadmap() {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8" id="roadmap">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" id="roadmap">
+      <AnimatedBackground variant="accent" intensity="low" animated />
+      
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -100,13 +103,14 @@ export default function Roadmap() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
+                    transition={{ duration: 0.55, delay: i * 0.09 }}
                     className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 items-center`}
                   >
                     {/* Content */}
                     <div className="flex-1 lg:text-right">
                       <motion.div
-                        whileHover={{ scale: 1.02 }}
+                        whileHover={{ scale: 1.03, y: -4 }}
+                        transition={{ type: 'spring', stiffness: 220, damping: 18 }}
                         className="glass rounded-2xl p-6 glow-effect"
                       >
                         <p className="text-sm font-bold text-accent-500 mb-2">{item.status}</p>
@@ -117,7 +121,8 @@ export default function Roadmap() {
 
                     {/* Center Icon */}
                     <motion.div
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.12, rotate: 6 }}
+                      transition={{ type: 'spring', stiffness: 260, damping: 16 }}
                       className={`hidden lg:flex w-16 h-16 rounded-full bg-gradient-to-br ${item.color} items-center justify-center shadow-lg flex-shrink-0`}
                     >
                       <Icon size={28} className="text-white" />
@@ -125,7 +130,8 @@ export default function Roadmap() {
 
                     {/* Mobile Icon */}
                     <motion.div
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.12, rotate: 6 }}
+                      transition={{ type: 'spring', stiffness: 260, damping: 16 }}
                       className={`lg:hidden w-14 h-14 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg flex-shrink-0`}
                     >
                       <Icon size={24} className="text-white" />

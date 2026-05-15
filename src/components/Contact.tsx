@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, ArrowRight } from 'lucide-react';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function Contact() {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8" id="contact">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" id="contact">
+      <AnimatedBackground variant="primary" intensity="medium" animated />
+      
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}

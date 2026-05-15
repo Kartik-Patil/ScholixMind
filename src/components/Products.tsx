@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import { BookOpen, Users, Zap, ArrowRight, CheckCircle } from 'lucide-react';
+import ProductLogo from './ProductLogo';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function Products() {
   const products = [
     {
       icon: BookOpen,
       name: 'EduAttend',
+      logo: '/assests/EduAttend_logo.png',
       subtitle: 'Smart Attendance & Academic Operations',
       description: 'Intelligent attendance tracking and academic engagement platform for schools and colleges.',
       features: [
@@ -22,6 +25,7 @@ export default function Products() {
     {
       icon: Users,
       name: 'EduPilot',
+      logo: '/assests/EduPilot_logo.png',
       subtitle: 'Modern College Management Platform',
       description: 'Complete academic management system for colleges with attendance, marks, and analytics.',
       features: [
@@ -38,6 +42,7 @@ export default function Products() {
     {
       icon: Zap,
       name: 'CETup',
+      logo: '/assests/CETup_logo.png',
       subtitle: 'AI-Powered CET Preparation Platform',
       description: 'Smart preparation and performance platform for competitive exam aspirants.',
       features: [
@@ -54,7 +59,9 @@ export default function Products() {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8" id="products">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" id="products">
+      <AnimatedBackground variant="secondary" intensity="medium" animated />
+      
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -86,50 +93,86 @@ export default function Products() {
           {/* Products Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {products.map((product, i) => {
-              const Icon = product.icon;
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 36, scale: 0.97 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.15 }}
+                  transition={{ duration: 0.65, delay: i * 0.12, ease: 'easeOut' }}
+                  whileHover={{ y: -10, scale: 1.01 }}
                   className={`rounded-2xl p-8 bg-gradient-to-br ${product.bgGradient} border border-slate-200/50 dark:border-slate-700/50 glow-effect group hover:-translate-y-4 transition-all duration-300`}
                 >
                   {/* Header */}
                   <div className="mb-6">
-                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${product.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                      <Icon size={32} className="text-white" />
+                    <div className="mb-4 flex items-center gap-4">
+                      <motion.div
+                        animate={{ y: [0, -2, 0] }}
+                        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.25 }}
+                      >
+                        <ProductLogo src={product.logo} alt={product.name} size={74} />
+                      </motion.div>
+                      <div className="min-w-0">
+                        <motion.h3
+                          initial={{ opacity: 0, x: -12 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.05 + i * 0.08 }}
+                          className="text-2xl font-bold"
+                        >
+                          {product.name}
+                        </motion.h3>
+                        <motion.p
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.1 + i * 0.08 }}
+                          className="text-primary-600 dark:text-primary-400 font-semibold"
+                        >
+                          {product.subtitle}
+                        </motion.p>
+                      </div>
                     </div>
-                    <h3 className="text-2xl font-bold">{product.name}</h3>
-                    <p className="text-primary-600 dark:text-primary-400 font-semibold">{product.subtitle}</p>
                   </div>
 
                   {/* Description */}
-                  <p className="text-slate-600 dark:text-slate-400 mb-8">
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.15 + i * 0.05 }}
+                    className="text-slate-600 dark:text-slate-400 mb-8"
+                  >
                     {product.description}
-                  </p>
+                  </motion.p>
 
                   {/* Features */}
-                  <div className="space-y-3 mb-8">
+                  <motion.div
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true }}
+                    variants={{
+                      hidden: {},
+                      show: { transition: { staggerChildren: 0.06, delayChildren: 0.12 } },
+                    }}
+                    className="space-y-3 mb-8"
+                  >
                     {product.features.map((feature, j) => (
                       <motion.div
                         key={j}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: (i * 0.15) + (j * 0.05) }}
+                        variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0 } }}
                         className="flex items-start gap-3"
+                        whileHover={{ x: 4 }}
                       >
                         <CheckCircle size={18} className="text-accent-500 mt-0.5 flex-shrink-0" />
                         <span className="text-sm text-slate-600 dark:text-slate-400">{feature}</span>
                       </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
 
                   {/* CTA Button */}
                   <motion.button
-                    whileHover={{ x: 4 }}
+                    whileHover={{ x: 4, scale: 1.01 }}
                     className="w-full flex items-center justify-center gap-2 btn-secondary group/btn"
                   >
                     Learn More

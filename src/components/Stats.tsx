@@ -1,5 +1,26 @@
-import { motion } from 'framer-motion';
+import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { BarChart3, Users, Zap, TrendingUp } from 'lucide-react';
+
+function CountUp({ value, suffix = '' }: { value: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.7 });
+  const motionValue = useMotionValue(0);
+  const spring = useSpring(motionValue, { stiffness: 80, damping: 20, mass: 1 });
+  const display = useTransform(spring, (latest) => {
+    if (value >= 10000) return `${Math.round(latest).toLocaleString()}${suffix}`;
+    if (value >= 100) return `${Math.round(latest)}${suffix}`;
+    return `${latest.toFixed(1)}${suffix}`;
+  });
+
+  useEffect(() => {
+    if (inView) {
+      motionValue.set(value);
+    }
+  }, [inView, motionValue, value]);
+
+  return <motion.span ref={ref}>{display}</motion.span>;
+}
 
 export default function Stats() {
   const stats = [
@@ -13,28 +34,36 @@ export default function Stats() {
     <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ staggerChildren: 0.12 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {stats.map((stat, i) => {
             const Icon = stat.icon;
+            const numericValue = Number(stat.value.replace(/[^\d.]/g, ''));
+            const suffix = stat.value.replace(/[\d.]/g, '');
             return (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="glass rounded-2xl p-8 glow-effect group hover:glow-effect transition-all duration-300 hover:-translate-y-2"
+                transition={{ duration: 0.55, delay: i * 0.08, ease: 'easeOut' }}
+                whileHover={{ y: -8, rotateX: 4, rotateY: -4 }}
+                className="glass rounded-2xl p-8 glow-effect group transition-all duration-300 hover:shadow-[0_24px_80px_rgba(79,70,229,0.18)]"
               >
-                <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                <motion.div
+                  animate={{ y: [0, -2, 0] }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.15 }}
+                  className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                >
                   <Icon size={24} className="text-white" />
-                </div>
+                </motion.div>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">{stat.label}</p>
                 <p className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
-                  {stat.value}
+                  <CountUp value={numericValue} suffix={suffix} />
                 </p>
               </motion.div>
             );
